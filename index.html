@@ -22,7 +22,7 @@
     
     <!-- モーダルウィンドウ -->
     <button v-on:click="openWindow" class="open">開く</button>
-    <div class="window" v-show="showMessage">
+    <div class="window" v-show="showMessage" v-on:click="closeWindow">
       <div class="message" >
         <p>モーダルウィンドウ</p>
         <button v-on:click="closeWindow">閉じる</button>
