@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 切り替えタブ -->
+  <div id="app">
+    <div class="tab-group">
+      <button class="tab" v-on:click="active1">タブ１</button>
+      <button class="tab" v-on:click="active2">タブ２</button>
+      <button class="tab" v-on:click="active3">タブ３</button>
+    </div>
+    <p v-if="click === 'tab1'">コンテンツ１</p>
+    <p v-else-if="click === 'tab2'">コンテンツ２</p>
+    <p v-else="click === 'tab3'">コンテンツ３</p>
+    
+    <!-- モーダルウィンドウ -->
+    <button v-on:click="openWindow" class="open">開く</button>
+    <div class="window" v-show="showMessage">
+      <div class="message" >
+        <p>モーダルウィンドウ</p>
+        <button v-on:click="closeWindow">閉じる</button>
+      </div>
+    </div>
+    
+    <!-- リアルタイム検索 -->
+    <div class="realtime">
+      <input type="text" v-model="keyword">
+      <ul>
+        <li v-for="user in filteredUsers" :key="users">{{user}}</li>
+      </ul>
+    </div>
+  </div>
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        click: 'tab1',
+        showMessage: false,
+        keyword: '',
+        users: ['佐藤', '山田', '鈴木', '田中'],
+      },
+      methods: {
+        active1: function(active){
+          this.click = 'tab1'
+        },
+        active2: function(active){
+          this.click = 'tab2'
+        },
+        active3: function(active){
+          this.click = 'tab3'
+        },
+        openWindow: function(){
+          this.showMessage = true
+        },
+        closeWindow: function(){
+          this.showMessage = false
+        },
+      },
+      computed: {
+        filteredUsers: function(){
+          let users = [];
+          for(let i in this.users) {
+            let name = this.users[i];
+            if(name.indexOf(this.keyword) !== -1) {
+              users.push(name);
+            }
+          }
+          return users;
+        }
+      }
+    })
+  </script>
+</body>
+</html>
